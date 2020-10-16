@@ -1,5 +1,4 @@
 <?php
-# @t10: Search Stats
 
 defined( '_VALID_XTC' ) or die( 'Direct Access to this location is not allowed.' );
 
