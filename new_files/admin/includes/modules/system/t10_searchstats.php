@@ -79,4 +79,3 @@ class t10_searchstats
 					 );
     }    
 }
-?>
