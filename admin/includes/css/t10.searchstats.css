@@ -1,0 +1,58 @@
+a.truncate 										{float:right;}
+
+table.stats 									{width:100%;border-collapse:collapse;margin-top:20px;}
+/*table.stats a 									{font-size:12px !important;}*/
+input.go{background:#900;border-color:#900;color:#fff;cursor:pointer;display: inline-block;font-size:10px;font-weight:bold;line-height:14px;margin:4px 4px 0 0;padding:3px 15px 4px 15px;border-radius:5px;vertical-align:top;}
+input[name="q"]{background:#fff;border-color:#ccc;color:#000;font-size:12px;margin:4px 4px 0 0;padding:5px;border-radius:5px;width:200px;}
+a.viewNewTab{font-weight:bold;}
+table.stats td,
+table.stats th									{vertical-align:top;background:#ccc;padding:5px;font-size:10px;font-family:Verdana, Arial, sans-serif;text-align:left;}
+table.stats th									{border-bottom:1px solid #aaa;border-right:1px solid #aaa;border-top:1px solid #aaa;}
+table.stats tr th:last-child 					{width:500px;}
+
+table.stats td,
+table.stats tr.current td 						{-webkit-transition:padding 100ms;-moz-transition:padding 100ms;-o-transition:padding 100ms;transition:padding 100ms;}
+
+table.stats tr.current td						{background:#efefef !important;padding:10px 5px;border-top:1px solid #ccc!important;border-bottom:1px solid #ccc !important;}
+table.stats tr.current td:first-child *			{font-weight:bold;}
+table.stats tbody tr:first-child.current td 	{padding-top:5px;}
+table.stats tr:nth-child(odd) td 				{background:#fafafa;}
+table.stats tr:nth-child(even) td 				{background:#f5f5f5;}
+table.stats th 									{padding:0 10px 0 0;border-bottom:1px solid #ccc;} 
+table.stats th a 								{background:no-repeat center right;font-weight:bold !important;padding:10px 25px 10px 5px;display:block;text-decoration:none;}				
+table.stats th.current 							{background:#aaa;}
+table.stats th.current.asc a					{background-image:url('images/t10.searchstats.up.png');}
+table.stats th.current.desc a					{background-image:url('images/t10.searchstats.down.png');}
+
+
+div.productSearch 								{padding:10px 0;max-width:400px;}
+div.productSearch .no-result 					{opacity:.5;font-style:italic;}
+div.productSearch label.toggle 					{margin-bottom:7px;padding-bottom:8px;border-bottom:1px solid #cfcfcf;}
+div.productSearch .checkbox 					{display:block;padding-left:20px;}
+div.productSearch .checkbox [type=checkbox]		{margin-left:-20px;float:left;}
+div.productSearch .checkbox span.keywords		{display:block;color:#7d7d7d;margin:2px 0 8px;}
+div.productSearch .search-result 				{opacity:1;-webkit-transition:opacity 100ms;-moz-transition:opacity 100ms;-o-transition:opacity 100ms;transition:opacity 100ms;}
+
+div.productSearch .search-result.loading 		{opacity:.2;background:url('images/t10.searchstats.loading.gif') no-repeat center center;}
+form.productSearch 								{display:block;margin-bottom:20px;}
+
+div.productSearch .keyword.new-keyword 			{color:#40c24b;font-weight:bold;}
+div.productSearch .keyword.old-keyword 			{color:inherit;}
+div.productSearch .keyword.duplicate-keyword 	{color:#565656;font-weight:bold;}
+
+div.productSearch #submitProductAssignment 		{width:100%;margin:20px 0 0 0;display:block;text-align:center;border:1px solid #acdead;background:#ccc;font-family:Verdana, Arial, sans-serif;font-size:12px;color:#000;font-weight:normal;text-decoration:none;outline:none;cursor:pointer;line-height:22px;height:auto;-webkit-transition:opacity 100ms;-moz-transition:opacity 100ms;-o-transition:opacity 100ms;transition:opacity 100ms;}
+
+div.productSearch #submitProductAssignment:disabled {opacity:.5;}
+div.productSearch .products-name.success a			{color:#40c24b;}
+div.productSearch .products-name.fail a				{color:#d52634;}
+div.productSearch .message.success 					{background:#ccc;padding:20px;margin-bottom:20px;}
+div.productSearch .message.fail 					{background:#f98e8e;padding:20px;margin-bottom:20px;}
+
+div.LPMInfo 										{box-shadow:0 0 30px #cfcfcf;color:#333;width:550px;position:absolute;min-height:300px;background:#fff;padding:20px 30px;border:1px solid #ccc;font-size:12px;line-height:130%;font-family:Verdana, Arial, sans-serif;}
+div.LPMInfo a 										{font-weight:inherit;font-size:inherit;text-decoration:underline;}
+div.LPMInfo h1 										{font-size:24px;font-weight:normal;border-bottom:1px solid #cfcfcf;padding-bottom:20px;}
+div.LPMInfo h1 a 									{text-decoration:none;}
+div.LPMInfo .close  								{display:block;}
+div.LPMInfo .close.top 								{text-decoration:none;font-size:24px;position:absolute;width:30px;height:30px;line-height:30px;display:block;top:0;right:0;text-align:center;}
+div.LPMInfo ul 										{margin:20px 0;padding:0;}
+div.LPMInfo li 										{list-style:disc;margin:0 0 10px 20px;padding:0;}
