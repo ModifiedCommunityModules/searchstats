@@ -39,9 +39,9 @@
 * ------------------------------------------------------------------
 */
 
-require('includes/application_top.php');
-require_once(DIR_WS_CLASSES . 'split_page_results.php');
-require_once(DIR_WS_CLASSES . 't10.searchstats.php');
+require 'includes/application_top.php';
+require_once DIR_WS_CLASSES . 'split_page_results.php';
+require_once DIR_WS_CLASSES . 't10.searchstats.php';
 
 // product assignment via ajax
 if (isset($_POST['assignQuery'])) {
@@ -51,7 +51,10 @@ if (isset($_POST['assignQuery'])) {
     header('Expires: Tue, 10 Jul 1984 13:37:00 GMT');
     header('Content-type: application/json');
 
-    $return = array('success' => false, 'msg' => '');	
+    $return = [
+        'success' => false,
+        'msg' => ''
+    ];
 
     if (empty($_POST['addProduct']) || !is_array($_POST['addProduct'])) {
         $return['msg'] = ERROR_MSG_NO_PRODUCTS;
@@ -63,14 +66,13 @@ if (isset($_POST['assignQuery'])) {
         die(json_encode($return));
     }
 
-
     foreach ($_POST['addProduct'] as $pID) {
-        $k 				= new t10_productKeywords($pID, $_SESSION['languages_id']);
-        $return[$pID] 	= $k->saveKeywords($pID, strip_tags(trim($_POST['query'])));	
+        $k = new t10_productKeywords($pID, $_SESSION['languages_id']);
+        $return[$pID] = $k->saveKeywords($pID, strip_tags(trim($_POST['query'])));
     }
 
-    $return['success'] 	= true;
-    $return['msg'] 		= sprintf(SUCCESS_MSG_PRODUCTASSIGNMENT, count($_POST['addProduct']));
+    $return['success'] = true;
+    $return['msg'] = sprintf(SUCCESS_MSG_PRODUCTASSIGNMENT, count($_POST['addProduct']));
 
     die(json_encode($return));
 }
@@ -83,7 +85,6 @@ if (isset($_POST['truncate']) && (int) $_POST['truncate'] == 1) {
 
 // product search via ajax
 if (isset($_GET['productSearch'])) {
-
     $search = new t10_searchstats($_GET['query'], $_SESSION['languages_id']);
 
     header('Cache-Control: no-cache, must-revalidate');
@@ -94,42 +95,50 @@ if (isset($_GET['productSearch'])) {
 }
 
 // whitelist possible order fields
-$orderFields 		= array('query' 	=> QUERY, 
-                               'searches' 	=> SEARCHES,
-                               'crdate' 	=> CRDATE, 
-                               'tstamp' 	=> TSTAMP, 
-                               'products' 	=> PRODUCTS
-                               );
+$orderFields = [
+    'query' => QUERY, 
+    'searches' => SEARCHES,
+    'crdate' => CRDATE, 
+    'tstamp' => TSTAMP, 
+    'products' => PRODUCTS
+];
 
-$orderDirections 	= array('desc', 'asc');
+$orderDirections = [
+    'desc',
+    'asc'
+];
 
 // assign session values, use whitelists from above
-if (isset($_GET['orderField']) && in_array($_GET['orderField'], array_keys($orderFields)))
+if (isset($_GET['orderField']) && in_array($_GET['orderField'], array_keys($orderFields))) {
     $_SESSION['t10']['filter_stats']['orderField'] = $_GET['orderField'];
+}
 
-if (isset($_GET['orderDirection']) && in_array($_GET['orderDirection'], $orderDirections))
+if (isset($_GET['orderDirection']) && in_array($_GET['orderDirection'], $orderDirections)) {
     $_SESSION['t10']['filter_stats']['orderDirection'] = $_GET['orderDirection'];
+}
 
 // set defaults for both
-if (empty($_SESSION['t10']['filter_stats']['orderField']))
+if (empty($_SESSION['t10']['filter_stats']['orderField'])) {
     $_SESSION['t10']['filter_stats']['orderField'] = 'searches';
+}
 
-if (empty($_SESSION['t10']['filter_stats']['orderDirection']))
+if (empty($_SESSION['t10']['filter_stats']['orderDirection'])) {
     $_SESSION['t10']['filter_stats']['orderDirection'] = current($orderDirections);
-
+}
 
 // select all search phrases from table
-$q 		= sprintf('SELECT * FROM %s ORDER BY %s %s', TABLE_T10_SEARCHSTATS, $_SESSION['t10']['filter_stats']['orderField'], $_SESSION['t10']['filter_stats']['orderDirection']);
+$q = sprintf('SELECT * FROM %s ORDER BY %s %s', TABLE_T10_SEARCHSTATS, $_SESSION['t10']['filter_stats']['orderField'], $_SESSION['t10']['filter_stats']['orderDirection']);
 $qSplit = new splitPageResults($_GET['page'], '20', $q, $qNumRows);
-$q 		= xtc_db_query($q);
+$q = xtc_db_query($q);
 
-  require (DIR_WS_INCLUDES.'head.php');
+require DIR_WS_INCLUDES . 'head.php';
 ?>
+
 <link rel="stylesheet" type="text/css" href="includes/css/t10.searchstats.css">
 </head>
 <body>
     <!-- header //-->
-    <?php require(DIR_WS_INCLUDES . 'header.php'); ?>
+    <?php require DIR_WS_INCLUDES . 'header.php'; ?>
     <!-- header_eof //-->
     <div data-project="landingpagemanager" data-version="0.1" data-key="<?php echo TAG_KEY; ?>">
     <!-- body //-->
@@ -137,7 +146,7 @@ $q 		= xtc_db_query($q);
             <tr>
                 <td class="columnLeft2" width="<?php echo BOX_WIDTH; ?>" valign="top">
                     <!-- left_navigation //-->
-                    <?php require(DIR_WS_INCLUDES . 'column_left.php'); ?>
+                    <?php require DIR_WS_INCLUDES . 'column_left.php'; ?>
                     <!-- left_navigation_eof //-->
                 </td>
 
@@ -146,12 +155,12 @@ $q 		= xtc_db_query($q);
                     <table border="0" width="100%" cellspacing="0" cellpadding="2">
                         <tr>
                             <td>
-                                <?php if (xtc_db_num_rows($q) > 0):?>
+                                <?php if (xtc_db_num_rows($q) > 0) {?>
                                     <form action="<?php echo FILENAME_MODULE_T10_SEARCHSTATS; ?>" method="post">
                                         <a href="#" class="truncate button fr" data-msg="<?php echo TRUNCATE; ?>"><?php echo TRUNCATE_LABEL; ?></a>
                                         <input type="hidden" name="truncate" value="1">
                                     </form>
-                                <?php endif; ?>
+                                <?php } ?>
 
                                 <div class="pageHeading"><?php echo HEADING_TITLE; ?></div>
                             </td>
@@ -193,66 +202,68 @@ $q 		= xtc_db_query($q);
                                     <thead>
                                         <tr>
                                             <?php
-                                            // shorten
-                                            $currtenFilter 	= $_SESSION['t10']['filter_stats'];
+                                                // shorten
+                                                $currtenFilter = $_SESSION['t10']['filter_stats'];
 
-                                            foreach ($orderFields as $orderField => $label) {
-                                            // indicate the current direction 
-                                            $classes = array($currtenFilter['orderDirection']);
-                                            // keep the currently selected direction
-                                            $direction 	= $currtenFilter['orderDirection'];
+                                                foreach ($orderFields as $orderField => $label) {
+                                                    // indicate the current direction 
+                                                    $classes = [$currtenFilter['orderDirection']];
+                                                    // keep the currently selected direction
+                                                    $direction = $currtenFilter['orderDirection'];
 
-                                                // if one clicks a second time on the same link
-                                                // switch the direction
-                                                if ($currtenFilter['orderField'] == $orderField) {
-                                                    $direction = ($currtenFilter['orderDirection'] == 'asc') ? 'desc' : 'asc';
-                                                    
-                                                    // highlight the current order field
-                                                    $classes[] = 'current';
+                                                    // if one clicks a second time on the same link
+                                                    // switch the direction
+                                                    if ($currtenFilter['orderField'] == $orderField) {
+                                                        $direction = $currtenFilter['orderDirection'] == 'asc' ? 'desc' : 'asc';
+                                                        
+                                                        // highlight the current order field
+                                                        $classes[] = 'current';
+                                                    }
+
+
+                                                    // the links title to prevent confusion
+                                                    $title = sprintf(SORT_BY, $direction == 'asc' ? SORT_BY_ASC : SORT_BY_DESC, $label);
+                                                    $links[$orderField] = sprintf('%s%s?%s', DIR_WS_ADMIN, FILENAME_MODULE_T10_SEARCHSTATS, http_build_query(array('orderField' => $orderField, 'orderDirection' => $direction)));
+                                                    $links[$orderField] = sprintf('<th class="%s"><a href="%s" title="%s">%s</a></th>', implode(' ', $classes), $links[$orderField], $title, $label);
                                                 }
 
-
-                                                // the links title to prevent confusion
-                                                $title 				= sprintf(SORT_BY, (($direction == 'asc') ? SORT_BY_ASC : SORT_BY_DESC), $label);
-                                                $links[$orderField] = sprintf('%s%s?%s', DIR_WS_ADMIN, FILENAME_MODULE_T10_SEARCHSTATS, http_build_query(array('orderField' => $orderField, 'orderDirection' => $direction)));
-                                                $links[$orderField] = sprintf('<th class="%s"><a href="%s" title="%s">%s</a></th>', implode(' ', $classes), $links[$orderField], $title, $label);
-                                            }
-
-                                            // the options row
-                                            $links[] = '<th></th>';
-                                            echo implode(null, $links);
+                                                // the options row
+                                                $links[] = '<th></th>';
+                                                echo implode(null, $links);
                                             ?>
 
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php
-                                        $rows = array();
-                                        while ($r = xtc_db_fetch_array($q)) {
+                                            $rows = [];
+                                            while ($r = xtc_db_fetch_array($q)) {
+                                                $url = sprintf('%sadvanced_search_result.php?%s', DIR_WS_CATALOG, http_build_query(array('keywords' => $r['query'], 'dnt' => true)));
+                                                $link = sprintf('<a href="%s" class="viewNewTab nw" title="%s">%s</a>', $url, sprintf(QUERY_TITLE_TEXT, $r['query']), $r['query']);
+                                                
+                                                $options = [
+                                                    defined("FILENAME_MODULE_T10_TAGS") ? 
+                                                    sprintf('<a href="%s" class="button">%s</a>', 
+                                                    sprintf('%s?%s', FILENAME_MODULE_T10_TAGS, http_build_query(array('tag_id' => $r['query'], 'action' => 'new_tag'))), CREATE_LP) : 
+                                                    sprintf('<!--a href="http://j.mp/1g5d8MN" class="button toggleLPMInfo">%s</a-->', CREATE_LP),
+                                                    sprintf('<a href="%s" data-query="%s" class="button toggleSearch">%s</a>', '#', $r['query'], PRODUCT_ASSIGNEMNT)
+                                                ];
 
-                                        $url 		= sprintf('%sadvanced_search_result.php?%s', DIR_WS_CATALOG, http_build_query(array('keywords' => $r['query'], 'dnt' => true)));
-                                        $link 		= sprintf('<a href="%s" class="viewNewTab nw" title="%s">%s</a>', $url, sprintf(QUERY_TITLE_TEXT, $r['query']), $r['query']);
-                                        $options 	= array(
-                                        defined("FILENAME_MODULE_T10_TAGS") ? 
-                                        sprintf('<a href="%s" class="button">%s</a>', 
-                                        sprintf('%s?%s', FILENAME_MODULE_T10_TAGS, http_build_query(array('tag_id' => $r['query'], 'action' => 'new_tag'))), CREATE_LP) : 
-                                        sprintf('<!--a href="http://j.mp/1g5d8MN" class="button toggleLPMInfo">%s</a-->', CREATE_LP),
-                                        sprintf('<a href="%s" data-query="%s" class="button toggleSearch">%s</a>', '#', $r['query'], PRODUCT_ASSIGNEMNT)
-                                                        );
-
-                                        $row= array($link, 
+                                                $row = [
+                                                    $link, 
                                                     $r['searches'],
                                                     date('d.m.Y H:i:s', $r['crdate']),
                                                     date('d.m.Y H:i:s', $r['tstamp']),
                                                     $r['products'],
-                                                    implode(null, $options));
+                                                    implode(null, $options)
+                                                ];
 
-                                        // make it a nice row
-                                        $rows[] 	= sprintf('<td>%s</td>', implode('</td><td>', $row));
-                                        }
+                                                // make it a nice row
+                                                $rows[] = sprintf('<td>%s</td>', implode('</td><td>', $row));
+                                            }
 
-                                        // output all build rows
-                                        echo sprintf('<tr>%s</tr>', implode('</tr><tr>', $rows));
+                                            // output all build rows
+                                            echo sprintf('<tr>%s</tr>', implode('</tr><tr>', $rows));
                                         ?>
                                     </tbody>
                                 </table>
@@ -276,13 +287,13 @@ $q 		= xtc_db_query($q);
         </table>
     </div>
 
-    <script src="includes/javascript/t10.searchstats.js" /></script>
+    <script src="includes/javascript/t10.searchstats.js"></script>
 
     <!-- footer //-->
-    <?php require(DIR_WS_INCLUDES . 'footer.php'); ?>
+    <?php require DIR_WS_INCLUDES . 'footer.php'; ?>
     <!-- footer_eof //-->
     <br />
 </body>
 </html>
 
-<?php require(DIR_WS_INCLUDES . 'application_bottom.php'); ?>
+<?php require DIR_WS_INCLUDES . 'application_bottom.php'; ?>
