@@ -10,7 +10,6 @@ PHP 7.0 or above
 We recommend installing the module via the [MMLC](https://module-loader.de).
 *(Experienced developers can also install the module manually without MMLC. For this the required dependencies and autoloads must be also installed manually.)*
 
-
 ## Contributors
 - Robin Wieschendorf (robinwieschendorf.de) - transferred to Github and entered in MMLC
 - modified (www.modified-shop.org)
