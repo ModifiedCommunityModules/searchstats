@@ -1,0 +1,21 @@
+{
+    "name": "T10 Suchstatistik ",
+    "archiveName": "modifiedcommunitymodules/t-zehn-search-statistic",
+    "sourceDir": "new_files",
+    "version": "auto",
+    "shortDescription": "Die t10:Suchbegriffstatistik zeigt Ihnen die Suchbegriffe, die Ihre Besucher und Kunden über die shopinterne Suchfunktion eingeben",
+    "description": "Die t10:Suchbegriffstatistik zeigt Ihnen die Suchbegriffe, die Ihre Besucher und Kunden über die shopinterne Suchfunktion eingeben und wie viele Produkte für die verwendeten Begriffe gefunden werden. Natürlich sehen Sie so auch, welche Suchbegriffe besonders häufig eingegeben werden. Die Begriffe lassen sich nun komfortabel und direkt aus der Statistik heraus zu Ihren bestehenden Produkten zuordnen, sodass diese beim nächsten mal ebenfalls über die shopinterne Suche gefunden werden. So reagieren Sie schnell und flexibel auf das Suchverhalten Ihrer Kunden und verbessern die Suchergebnisse Ihres Shops (und somit auch Ihre Umsätze).",
+    "price": "free",
+    "require": {
+        "composer/autoload": "^1.1.0",
+        "robinthehood/modified-std-module": "^0.1.0"
+    },
+    "modifiedCompatibility": [
+        "2.0.5.0","2.0.5.1","2.0.6.0"
+    ],
+    "autoload": {
+      "psr-4": {
+          "ModifiedCommunityModules\\": "/vendor-no-composer/modifiedcommunitymodules"
+      }
+  }
+}

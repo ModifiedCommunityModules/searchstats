@@ -37,7 +37,6 @@
 * ------------------------------------------------------------------
 */
 define('HEADING_TITLE', 'total10 Search statistics');
-
 define('QUERY', 'Query');
 define('SEARCHES', 'Searches');
 define('CRDATE', 'First searched');
@@ -46,7 +45,6 @@ define('PRODUCTS', 'Products');
 define('SORT_BY', 'sort %s by %s');
 define('SORT_BY_ASC', 'ascending');
 define('SORT_BY_DESC', 'descending');
-
 define('ERROR_MSG_NO_PRODUCTS', 'Check at least one product to assign the current query');
 define('ERROR_MSG_NO_QUERY', 'No query submitted. Click the assign button again to refresh the form');
 define('SUCCESS_MSG_PRODUCTASSIGNMENT', 'Query was successfully assigned to %u product(s)');
@@ -61,6 +59,7 @@ define('VIEW_IN_SHOP', 'View %s in frontend');
 define('ASSIGN_PRODUCTS', 'Assign query to checked products');
 define('NEW_KEYWORDS_LABEL', 'New keyword %s has been or will be assigned');
 define('OLD_KEYWORDS_LABEL', 'Keyword %s is already assigned');
-
 define('TRUNCATE', 'Are you really sure?');
 define('TRUNCATE_LABEL', 'Truncate list');
+define('DELETE_QUERY_LABEL', 'Delete query');
+define('DELETE_QUERY_MESSAGE', 'Are you sure to delete the query %s from this list?');

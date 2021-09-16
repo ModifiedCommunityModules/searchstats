@@ -36,11 +36,11 @@
 *
 * ------------------------------------------------------------------
 */
-define('MODULE_T10_SEARCHSTATS_TEXT_TITLE', 'T10 Suchbegriffstatistik');
-define('MODULE_T10_SEARCHSTATS_TEXT_DESCRIPTION', '<strong>Demo <a href="http://shopmodule.t10.de/t10-Suchbegriffstatistik.html" target="_blank">auf shopmodule.t10.de</a></strong>');
+define('MODULE_MCM_SEARCHSTATS_TEXT_TITLE', 'T10 Suchbegriffstatistik');
+define('MODULE_MCM_SEARCHSTATS_TEXT_DESCRIPTION', '');
 
-define('MODULE_T10_SEARCHSTATS_STATUS_DESC', 'T10 Suchbegriffstatistik aktivieren?');
-define('MODULE_T10_SEARCHSTATS_STATUS_TITLE', '<br>Status');
+define('MODULE_MCM_SEARCHSTATS_STATUS_DESC', 'T10 Suchbegriffstatistik aktivieren?');
+define('MODULE_MCM_SEARCHSTATS_STATUS_TITLE', '<br>Status');
 
-define('MODULE_T10_SEARCHSTATS_ADMIN_COUNT_DESC', 'Admin in der Suchstatistik mitz&auml;hlen?');
-define('MODULE_T10_SEARCHSTATS_ADMIN_COUNT_TITLE', '<br>Admin z&auml;hlen');
+define('MODULE_MCM_SEARCHSTATS_ADMIN_COUNT_DESC', 'Admin in der Suchstatistik mitz&auml;hlen?');
+define('MODULE_MCM_SEARCHSTATS_ADMIN_COUNT_TITLE', '<br>Admin z&auml;hlen');

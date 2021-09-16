@@ -37,7 +37,9 @@
 * ------------------------------------------------------------------
 */
 
-class t10_searchstats
+namespace ModifiedCommunityModules\SearchStats\Classes;
+
+class SearchStatsPublic
 {
     public $query = '';
     public $numProducts = 0;

@@ -1,0 +1,4 @@
+* Die t10:Suchbegriffstatistik zeigt Ihnen die Suchbegriffe, die Ihre Besucher und Kunden über die shopinterne Suchfunktion eingeben und wie viele Produkte für die verwendeten Begriffe gefunden werden. 
+* Natürlich sehen Sie so auch, welche Suchbegriffe besonders häufig eingegeben werden. 
+* Die Begriffe lassen sich nun komfortabel und direkt aus der Statistik heraus zu Ihren bestehenden Produkten zuordnen, sodass diese beim nächsten mal ebenfalls über die shopinterne Suche gefunden werden. 
+* So reagieren Sie schnell und flexibel auf das Suchverhalten Ihrer Kunden und verbessern die Suchergebnisse Ihres Shops (und somit auch Ihre Umsätze).
