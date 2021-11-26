@@ -38,7 +38,6 @@
 */
 
 define('HEADING_TITLE', 'total10 Suchbegriffstatistik');
-
 define('QUERY', 'Suchbegriff');
 define('SEARCHES', 'Suchen');
 define('CRDATE', 'Zuerst gesucht am');
@@ -47,7 +46,6 @@ define('PRODUCTS', 'Produkte');
 define('SORT_BY', '%s sortieren nach %s');
 define('SORT_BY_ASC', 'Aufsteigend');
 define('SORT_BY_DESC', 'Absteigend');
-
 define('ERROR_MSG_NO_PRODUCTS', 'Markieren Sie Produkte aus dem Suchergebnis, um den Suchbegriff zuzuweisen.');
 define('ERROR_MSG_NO_QUERY', 'Es wurde kein Suchbegriff übermittelt um ihn den Produkten zuzuordnen. Klicken Sie erneut auf den Button "Produkten zuweisen" um das Formular zu aktualisieren.');
 define('SUCCESS_MSG_PRODUCTASSIGNMENT', 'Suchbegriff wurde %u Produkt(en) zugeordnet');
@@ -62,6 +60,7 @@ define('VIEW_IN_SHOP', '%s im Shop ansehen');
 define('ASSIGN_PRODUCTS', 'Suchbegriff den markierten Produkten zuorden');
 define('NEW_KEYWORDS_LABEL', 'Das neue Keyword %s wird oder wurde dem Produkt hinzugefügt.');
 define('OLD_KEYWORDS_LABEL', 'Das Keyword %s ist dem Produkt bereits zugeordnet');
-
 define('TRUNCATE', 'Sind Sie sicher, dass Sie alle aufgezeichneten Suchbegriffe entfernen wollen?');
 define('TRUNCATE_LABEL', 'Liste leeren');
+define('DELETE_QUERY_LABEL', 'l&ouml;schen');
+define('DELETE_QUERY_MESSAGE', 'Sind Sie sicher, dass Sie den Suchbegriff %s aus der Liste entfernen m&ouml;chten?');

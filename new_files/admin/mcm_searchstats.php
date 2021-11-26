@@ -41,7 +41,8 @@
 
 require 'includes/application_top.php';
 require_once DIR_WS_CLASSES . 'split_page_results.php';
-require_once DIR_WS_CLASSES . 't10.searchstats.php';
+use ModifiedCommunityModules\SearchStats\Classes\{SearchStatsKeywords, SearchStatsAdmin};
+require_once DIR_FS_DOCUMENT_ROOT . '/vendor-no-composer/autoload.php';
 
 // product assignment via ajax
 if (isset($_POST['assignQuery'])) {
@@ -67,7 +68,7 @@ if (isset($_POST['assignQuery'])) {
     }
 
     foreach ($_POST['addProduct'] as $pID) {
-        $k = new t10_productKeywords($pID, $_SESSION['languages_id']);
+        $k = new SearchStatsKeywords($pID, $_SESSION['languages_id']);
         $return[$pID] = $k->saveKeywords($pID, strip_tags(trim($_POST['query'])));
     }
 
@@ -83,9 +84,17 @@ if (isset($_POST['truncate']) && (int) $_POST['truncate'] == 1) {
     xtc_redirect(FILENAME_MODULE_T10_SEARCHSTATS);
 }
 
+// delete one record
+if (isset($_POST['delete']) && (int)$_POST['delete'] == 1 && (int)$_POST['id'] > 0) {
+
+    $q = xtc_db_query(sprintf('DELETE FROM %s WHERE id=%u', TABLE_T10_SEARCHSTATS, (int) $_POST['id']));
+    xtc_redirect(FILENAME_MODULE_T10_SEARCHSTATS);
+
+}
+
 // product search via ajax
 if (isset($_GET['productSearch'])) {
-    $search = new t10_searchstats($_GET['query'], $_SESSION['languages_id']);
+    $search = new SearchStatsAdmin($_GET['query'], $_SESSION['languages_id']);
 
     header('Cache-Control: no-cache, must-revalidate');
     header('Expires: Tue, 10 Jul 1984 13:37:00 GMT');
@@ -96,10 +105,10 @@ if (isset($_GET['productSearch'])) {
 
 // whitelist possible order fields
 $orderFields = [
-    'query' => QUERY, 
+    'query' => QUERY,
     'searches' => SEARCHES,
-    'crdate' => CRDATE, 
-    'tstamp' => TSTAMP, 
+    'crdate' => CRDATE,
+    'tstamp' => TSTAMP,
     'products' => PRODUCTS
 ];
 
@@ -134,7 +143,7 @@ $q = xtc_db_query($q);
 require DIR_WS_INCLUDES . 'head.php';
 ?>
 
-<link rel="stylesheet" type="text/css" href="includes/css/t10.searchstats.css">
+<link rel="stylesheet" type="text/css" href="includes/css/mcm_searchstats.css">
 </head>
 <body>
     <!-- header //-->
@@ -155,8 +164,11 @@ require DIR_WS_INCLUDES . 'head.php';
                     <table border="0" width="100%" cellspacing="0" cellpadding="2">
                         <tr>
                             <td>
-                                <?php if (xtc_db_num_rows($q) > 0) {?>
-                                    <form action="<?php echo FILENAME_MODULE_T10_SEARCHSTATS; ?>" method="post">
+                                <?php
+                                if (xtc_db_num_rows($q) > 0) {
+
+                                    echo xtc_draw_form('truncateList', FILENAME_MODULE_T10_SEARCHSTATS);
+                                ?>
                                         <a href="#" class="truncate button fr" data-msg="<?php echo TRUNCATE; ?>"><?php echo TRUNCATE_LABEL; ?></a>
                                         <input type="hidden" name="truncate" value="1">
                                     </form>
@@ -169,7 +181,9 @@ require DIR_WS_INCLUDES . 'head.php';
                         <tr>
                             <td valign="top">
                                 <div class="productSearch" style="display:none;">
-                                    <form action="<?php echo sprintf('%s?%s', FILENAME_MODULE_T10_SEARCHSTATS, http_build_query(array('productSearch' => true))); ?>" method="get" class="productSearch">
+                                    <?php
+                                    echo xtc_draw_form('truncateList', FILENAME_MODULE_T10_SEARCHSTATS, http_build_query(array('productSearch' => true)), "get", ' class="productSearch"');
+                                    ?>
                                         <input type="search" name="q" placeholder="<?php echo SEARCH_FILED_PLACEHOLDER; ?>">
                                         <input type="hidden" name="query" value="">
                                         <input type="submit" class="go" value="<?php echo SEARCH_BUTTON_LABEL; ?>">
@@ -206,7 +220,7 @@ require DIR_WS_INCLUDES . 'head.php';
                                                 $currtenFilter = $_SESSION['t10']['filter_stats'];
 
                                                 foreach ($orderFields as $orderField => $label) {
-                                                    // indicate the current direction 
+                                                    // indicate the current direction
                                                     $classes = [$currtenFilter['orderDirection']];
                                                     // keep the currently selected direction
                                                     $direction = $currtenFilter['orderDirection'];
@@ -238,19 +252,29 @@ require DIR_WS_INCLUDES . 'head.php';
                                         <?php
                                             $rows = [];
                                             while ($r = xtc_db_fetch_array($q)) {
+                                                $delete     = sprintf('%s
+                                                                        <input type="hidden" name="id" value="%u">
+                                                                        <input type="hidden" name="delete" value="1">
+                                                                        <a href="#" data-msg="%s" class="button confirm">%s</a>
+                                                                    </form>',
+                                                                    xtc_draw_form('deleteEntry', FILENAME_MODULE_T10_SEARCHSTATS),
+                                                                    $r['id'],
+                                                                    sprintf(DELETE_QUERY_MESSAGE, $r['query']),
+                                                                    DELETE_QUERY_LABEL);
                                                 $url = sprintf('%sadvanced_search_result.php?%s', DIR_WS_CATALOG, http_build_query(array('keywords' => $r['query'], 'dnt' => true)));
                                                 $link = sprintf('<a href="%s" class="viewNewTab nw" title="%s">%s</a>', $url, sprintf(QUERY_TITLE_TEXT, $r['query']), $r['query']);
                                                 
                                                 $options = [
-                                                    defined("FILENAME_MODULE_T10_TAGS") ? 
-                                                    sprintf('<a href="%s" class="button">%s</a>', 
-                                                    sprintf('%s?%s', FILENAME_MODULE_T10_TAGS, http_build_query(array('tag_id' => $r['query'], 'action' => 'new_tag'))), CREATE_LP) : 
+                                                    defined("FILENAME_MODULE_T10_TAGS") ?
+                                                    sprintf('<a href="%s" class="button">%s</a>',
+                                                    sprintf('%s?%s', FILENAME_MODULE_T10_TAGS, http_build_query(array('tag_id' => $r['query'], 'action' => 'new_tag'))), CREATE_LP) :
                                                     sprintf('<!--a href="http://j.mp/1g5d8MN" class="button toggleLPMInfo">%s</a-->', CREATE_LP),
-                                                    sprintf('<a href="%s" data-query="%s" class="button toggleSearch">%s</a>', '#', $r['query'], PRODUCT_ASSIGNEMNT)
+                                                    sprintf('<a href="%s" data-query="%s" class="button toggleSearch">%s</a>', '#', $r['query'], PRODUCT_ASSIGNEMNT),
+                                                    $delete
                                                 ];
 
                                                 $row = [
-                                                    $link, 
+                                                    $link,
                                                     $r['searches'],
                                                     date('d.m.Y H:i:s', $r['crdate']),
                                                     date('d.m.Y H:i:s', $r['tstamp']),
@@ -287,7 +311,7 @@ require DIR_WS_INCLUDES . 'head.php';
         </table>
     </div>
 
-    <script src="includes/javascript/t10.searchstats.js"></script>
+    <script src="includes/javascript/mcm_searchstats.js"></script>
 
     <!-- footer //-->
     <?php require DIR_WS_INCLUDES . 'footer.php'; ?>
